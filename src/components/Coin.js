@@ -1,7 +1,15 @@
 import React from "react";
 
-const Coin = (props) => {
-  const { name, image, symbol, price, volume, priceChange, marketCap } = props;
+const Coin = ({
+  name,
+  image,
+  symbol,
+  price,
+  volume,
+  priceChange,
+  marketCap,
+}) => {
+  // destructuring the props passed
   return (
     <div className="coin-container">
       <div className="coin-row">
@@ -11,15 +19,16 @@ const Coin = (props) => {
           <p className="coin-symbol">{symbol}</p>
         </div>
         <div className="coin-data">
-          <p className="coin-price"> ₹{price.toLocaleString()}</p>
-          <p className="coin-volume"> ₹{volume.toLocaleString()}</p>
+          {/* toLocaleString used for formatting the figure */}
+          <p className="coin-price">Price: ₹{price.toLocaleString()}</p>
+          <p className="coin-volume">Volume: ₹{volume.toLocaleString()}</p>
           {priceChange < 0 ? (
             <p className="coin-percent red">{priceChange.toFixed(2)}%</p>
           ) : (
             <p className="coin-percent green">{priceChange.toFixed(2)}%</p>
           )}
           <p className="coin-marketcap">
-            Mkt Cap: ₹{marketCap.toLocaleString()}
+            Market Cap: ₹{marketCap.toLocaleString()}
           </p>
         </div>
       </div>
