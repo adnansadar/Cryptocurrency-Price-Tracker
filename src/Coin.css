@@ -46,7 +46,7 @@
   display: flex;
   text-align: center;
   justify-content: space-between;
-  width: 100%;
+  width: 95%;
 }
 
 .coin-price {
@@ -86,14 +86,16 @@
   }
   .coin-price {
     width: 75px;
+    margin-right: 7px;
   }
   .coin-volume {
-    width: 140px;
+    width: 120px;
   }
   .coin-percent {
     width: 50px;
   }
   .coin-marketcap {
     width: 150px;
+    margin-left: 5px;
   }
 }
