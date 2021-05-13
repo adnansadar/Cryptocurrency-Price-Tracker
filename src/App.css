@@ -21,13 +21,12 @@
   margin-bottom: 54px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
 }
 
 .coin-text {
   margin-bottom: 32px;
-  text-align: center;
+  text-transform: uppercase;
   color: gold;
 }
 
@@ -48,4 +47,13 @@
 
 .coin-input::placeholder {
   color: aliceblue;
+}
+
+@media (max-width: 670px) {
+  .coin-input {
+    width: 250px;
+  }
+  .coin-text {
+    font-size: 1.25em;
+  }
 }
