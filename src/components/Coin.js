@@ -35,7 +35,8 @@ const Coin = ({
             <p className="coin-percent green">{priceChange.toFixed(2)}%</p>
           )}
           <p className="coin-marketcap">
-            Market Cap: ₹{marketCap.toLocaleString()}
+            Market Cap: {currencysymbol}
+            {marketCap.toLocaleString()}
           </p>
         </div>
       </div>
