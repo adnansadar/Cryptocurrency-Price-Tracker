@@ -8,6 +8,7 @@ const Coin = ({
   volume,
   priceChange,
   marketCap,
+  currencysymbol,
 }) => {
   // destructuring the props passed
   return (
@@ -20,8 +21,14 @@ const Coin = ({
         </div>
         <div className="coin-data">
           {/* toLocaleString used for formatting the figure */}
-          <p className="coin-price">Price: ₹{price.toLocaleString()}</p>
-          <p className="coin-volume">Volume: ₹{volume.toLocaleString()}</p>
+          <p className="coin-price">
+            Price: {currencysymbol}
+            {price.toLocaleString()}
+          </p>
+          <p className="coin-volume">
+            Volume: {currencysymbol}
+            {volume.toLocaleString()}
+          </p>
           {priceChange < 0 ? (
             <p className="coin-percent red">{priceChange.toFixed(2)}%</p>
           ) : (

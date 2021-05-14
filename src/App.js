@@ -22,6 +22,17 @@ export function App() {
       .catch((e) => console.log(e));
   }, [currency]);
 
+  const dictionary = {
+    inr: "₹",
+    usd: "$",
+    eur: "€",
+    gbp: "£",
+    cad: "$",
+    jpy: "¥",
+    aud: "$",
+    chf: "₣",
+  };
+
   const handleChange = (e) => {
     // console.log(e.target.value);
     setSearch(e.target.value); //value entered in the search box stored in search state
@@ -73,6 +84,7 @@ export function App() {
             marketCap={coin.market_cap}
             priceChange={coin.price_change_percentage_24h}
             volume={coin.total_volume}
+            currencysymbol={dictionary[currency]}
           />
         );
       })}
