@@ -1,20 +1,86 @@
 @import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100&display=swap");
 
-* {
+/* * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
   font-family: "JetBrains+Mono:wght@100", sans-serif;
-  background-color: #0b0425;
+} */
+
+.Nav-darkMode {
+  background-image: linear-gradient(
+    to bottom,
+    #0b0425,
+    #130c2b,
+    #1b1132,
+    #241538,
+    #2e183e,
+    #37183e,
+    #40173e,
+    #49173d,
+    #501435,
+    #55132d,
+    #581524,
+    #59191b
+  );
+  color: rgb(113, 67, 219) !important;
+}
+
+.Nav-lightMode {
+  background-image: linear-gradient(
+    to bottom,
+    #d16ba5,
+    #c777b9,
+    #ba83ca,
+    #aa8fd8,
+    #9a9ae1,
+    #8aa7ec,
+    #79b3f4,
+    #69bff8,
+    #52cffe,
+    #41dfff,
+    #46eefa,
+    #5ffbf1
+  );
   color: rgb(113, 67, 219);
 }
 
-.coin-app {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  margin-top: 64px;
-  color: gold;
+.Table-lightMode {
+  background-image: linear-gradient(
+    to bottom,
+    #5ffbf1,
+    #46eefa,
+    #41dfff,
+    #52cffe,
+    #69bff8,
+    #79b3f4,
+    #8aa7ec,
+    #9a9ae1,
+    #aa8fd8,
+    #ba83ca,
+    #c777b9,
+    #d16ba5
+  );
+  color: rgb(113, 67, 219);
+}
+
+.Table-darkMode {
+  background-image: linear-gradient(
+    to bottom,
+    #59191b,
+    #581524,
+    #55132d,
+    #501435,
+    #49173d,
+    #40173e,
+    #37183e,
+    #2e183e,
+    #241538,
+    #1b1132,
+    #130c2b,
+    #0b0425
+  );
+  color: rgb(113, 67, 219);
 }
 
 .coin-search {
@@ -25,13 +91,14 @@
 }
 
 .coin-text {
+  margin-top: 2.5em;
   margin-bottom: 32px;
   text-transform: uppercase;
   color: gold;
 }
 
 .toggle-currency {
-  margin-bottom: 40px;
+  padding-bottom: 40px;
 }
 
 .coin-input {
