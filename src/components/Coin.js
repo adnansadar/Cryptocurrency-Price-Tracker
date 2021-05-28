@@ -13,13 +13,13 @@ const Coin = ({
   // destructuring the props passed
   return (
     <div className="coin-container">
-      <div className="coin-row">
-        <div className="coin">
+      <div className=" coin-row">
+        <div className="mt-1 coin">
           <img src={image} alt="crypto" />
           <h1>{name}</h1>
           <p className="coin-symbol">{symbol}</p>
         </div>
-        <div className="coin-data">
+        <div className="border-bottom border-warning coin-data">
           {/* toLocaleString used for formatting the figure */}
           <p className="coin-price">
             Price: {currencysymbol}
