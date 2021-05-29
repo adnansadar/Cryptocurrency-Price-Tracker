@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 
 const Coin = ({
   name,
@@ -10,16 +11,41 @@ const Coin = ({
   marketCap,
   currencysymbol,
 }) => {
+  const [counter, setCounter] = useState(0);
   // destructuring the props passed
   return (
     <div className="coin-container">
-      <div className=" coin-row">
-        <div className="mt-1 coin">
-          <img src={image} alt="crypto" />
+      <div className="mt-2 coin-row">
+        <div className=" coin">
+          <img className="coin-img" src={image} alt="crypto" />
           <h1>{name}</h1>
-          <p className="coin-symbol">{symbol}</p>
+          <p className="coin-symbol mr-1">{symbol}</p>
+          <button
+            onClick={(e) => setCounter(counter + 1)}
+            className="ml-4 counter-button btn-sm btn-primary "
+          >
+            +
+          </button>
+
+          <button
+            onClick={(e) => (counter === 0 ? null : setCounter(counter - 1))}
+            className="counter-button btn-sm btn-primary ml-2 "
+          >
+            -
+          </button>
+
+          <div className="counter-input input-group input-group-sm ml-3">
+            <input
+              type="text"
+              className="form-control"
+              aria-label="Small"
+              aria-describedby="inputGroup-sizing-sm"
+              value={counter}
+              readOnly
+            ></input>
+          </div>
         </div>
-        <div className="border-bottom border-warning coin-data">
+        <div className=" border-bottom border-warning coin-data">
           {/* toLocaleString used for formatting the figure */}
           <p className="coin-price">
             Price: {currencysymbol}

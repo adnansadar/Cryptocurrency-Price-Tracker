@@ -4,9 +4,14 @@ import Coin from "./components/Coin";
 import "./Coin.css";
 import "./App.css";
 import { Dropdown, DropdownButton, ButtonGroup } from "react-bootstrap";
+import history from "./history";
 
 import dark from "./assets/images/darkmode.svg";
 import light from "./assets/images/lightmode.svg";
+import twitter from "./assets/images/twitter.svg";
+import instagram from "./assets/images/instagram.svg";
+import linkedin from "./assets/images/linkedin.svg";
+import github from "./assets/images/github.svg";
 
 export function App() {
   const [coins, setCoins] = useState([]);
@@ -14,7 +19,6 @@ export function App() {
   const [currency, setCurrency] = useState("inr");
   const [darkMode, setDarkMode] = useState(true);
   const url = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&order=market_cap_desc&per_page=20&page=1&sparkline=false`;
-  // const ref = useRef();
 
   // Making an API Call only on mount
   useEffect(() => {
@@ -41,7 +45,6 @@ export function App() {
   };
 
   const handleChange = (e) => {
-    // console.log(e.target.value);
     setSearch(e.target.value); //value entered in the search box stored in search state
   };
 
@@ -51,10 +54,10 @@ export function App() {
 
   return (
     <div>
-      <div className={darkMode ? "Nav-lightMode" : "Nav-darkMode"}>
+      <div className={darkMode ? " Nav-darkMode" : "Nav-lightMode"}>
         <img
           alt=""
-          src={darkMode ? dark : light}
+          src={darkMode ? light : dark}
           width="40"
           height="40"
           className="float-right mr-4 mt-3"
@@ -76,7 +79,6 @@ export function App() {
         </div>
         <div className="text-center toggle-currency">
           <div>
-            {/* <label style={{ "margin-right": "5px" }}>Currency: </label> */}
             {[DropdownButton].map((DropdownType, idx) => (
               <DropdownType
                 onSelect={(e) => {
@@ -87,7 +89,7 @@ export function App() {
                 id={`dropdown-button-drop-${idx}`}
                 size="sm"
                 variant="warning"
-                title="Currency"
+                title={currency}
               >
                 <Dropdown.Item eventKey="inr">INR</Dropdown.Item>
                 <Dropdown.Item eventKey="usd">USD</Dropdown.Item>
@@ -100,24 +102,11 @@ export function App() {
               </DropdownType>
             ))}
           </div>
-          {/* <select
-          onChange={(e) => setCurrency(e.target.value)}
-          id="toggle-currency"
-          >
-          <option value="inr">INR</option>
-          <option value="usd">USD</option>
-          <option value="eur">EUR</option>
-          <option value="gbp">GBP</option>
-          <option value="cad">CAD</option>
-          <option value="jpy">JPY</option>
-          <option value="aud">AUD</option>
-          <option value="chf">CHF</option>
-        </select> */}
         </div>
       </div>
-      {/* {console.log(currency)} */}
+
       {/* For each filtered coin pass the details to Coin component to display */}
-      <div className={darkMode ? "Table-lightMode" : "Table-darkMode"}>
+      <div className={darkMode ? "Table-darkMode " : "Table-lightMode "}>
         {filteredCoins.map((coin) => {
           return (
             <Coin
@@ -133,6 +122,41 @@ export function App() {
             />
           );
         })}
+      </div>
+      <div
+        className={darkMode ? "footer Nav-darkMode" : "footer Nav-lightMode"}
+      >
+        <footer>
+          <p>
+            <img className="mr-3" alt="" src={twitter} width="30" height="30" />
+            <img
+              className="mr-3"
+              alt=""
+              src={instagram}
+              width="30"
+              height="30"
+            />
+            <img
+              className="mr-3"
+              alt=""
+              src={linkedin}
+              width="30"
+              height="30"
+              onClick={(event) =>
+                history.push("https://www.linkedin.com/in/adnansadar")
+              }
+            />
+            <img
+              className="mr-3"
+              alt=""
+              src={github}
+              width="30"
+              height="30"
+              onClick={(event) => history.push("https://github.com/adnansadar")}
+            />
+          </p>
+          <p>Copyright &copy; 2021. All rights reserved</p>
+        </footer>
       </div>
     </div>
   );
