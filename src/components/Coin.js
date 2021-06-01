@@ -11,7 +11,8 @@ const Coin = ({
   marketCap,
   currencysymbol,
 }) => {
-  const [counter, setCounter] = useState(0);
+  const [userPrice, setUserPrice] = useState(null);
+  const [cryptoValue, setCryptoValue] = useState(null);
   // destructuring the props passed
   return (
     <div className="coin-container">
@@ -20,31 +21,39 @@ const Coin = ({
           <img className="coin-img" src={image} alt="crypto" />
           <h1>{name}</h1>
           <p className="coin-symbol mr-1">{symbol}</p>
-          <button
-            onClick={(e) => setCounter(counter + 1)}
-            className="ml-4 counter-button btn-sm btn-primary "
-          >
-            +
-          </button>
 
-          <button
-            onClick={(e) => (counter === 0 ? null : setCounter(counter - 1))}
-            className="counter-button btn-sm btn-primary ml-2 "
-          >
-            -
-          </button>
-
-          <div className="counter-input input-group input-group-sm ml-3">
+          <div className="userPrice-input input-group input-group-sm ">
+            <div className="mt-1 mr-2">{currencysymbol}</div>
+            <input
+              type="number"
+              className="form-control"
+              aria-label="Small"
+              aria-describedby="inputGroup-sizing-sm"
+              placeholder="0"
+              value={userPrice}
+              onChange={(e) =>
+                e.target.value === "-" ? null : setUserPrice(e.target.value)
+              }
+            ></input>
+          </div>
+          <div className="userPrice-input input-group input-group-sm">
+            <div className="mt-1 mr-2">{symbol}</div>
             <input
               type="text"
               className="form-control"
               aria-label="Small"
               aria-describedby="inputGroup-sizing-sm"
-              value={counter}
+              placeholder="0"
               readOnly
+              value={
+                userPrice === 0 || userPrice == null
+                  ? 0
+                  : (userPrice / price).toLocaleString()
+              }
             ></input>
           </div>
         </div>
+
         <div className=" border-bottom border-warning coin-data">
           {/* toLocaleString used for formatting the figure */}
           <p className="coin-price">
