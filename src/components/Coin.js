@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 
 const Coin = ({
   name,
@@ -10,16 +11,50 @@ const Coin = ({
   marketCap,
   currencysymbol,
 }) => {
+  const [userPrice, setUserPrice] = useState(null);
+  const [cryptoValue, setCryptoValue] = useState(null);
   // destructuring the props passed
   return (
     <div className="coin-container">
-      <div className=" coin-row">
-        <div className="mt-1 coin">
-          <img src={image} alt="crypto" />
+      <div className="mt-2 coin-row">
+        <div className=" coin">
+          <img className="coin-img" src={image} alt="crypto" />
           <h1>{name}</h1>
-          <p className="coin-symbol">{symbol}</p>
+          <p className="coin-symbol mr-1">{symbol}</p>
+
+          <div className="userPrice-input input-group input-group-sm ">
+            <div className="mt-1 mr-2">{currencysymbol}</div>
+            <input
+              type="number"
+              className="form-control"
+              aria-label="Small"
+              aria-describedby="inputGroup-sizing-sm"
+              placeholder="0"
+              value={userPrice}
+              onChange={(e) =>
+                e.target.value === "-" ? null : setUserPrice(e.target.value)
+              }
+            ></input>
+          </div>
+          <div className="userPrice-input input-group input-group-sm">
+            <div className="mt-1 mr-2">{symbol}</div>
+            <input
+              type="text"
+              className="form-control"
+              aria-label="Small"
+              aria-describedby="inputGroup-sizing-sm"
+              placeholder="0"
+              readOnly
+              value={
+                userPrice === 0 || userPrice == null
+                  ? 0
+                  : (userPrice / price).toLocaleString()
+              }
+            ></input>
+          </div>
         </div>
-        <div className="border-bottom border-warning coin-data">
+
+        <div className=" border-bottom border-warning coin-data">
           {/* toLocaleString used for formatting the figure */}
           <p className="coin-price">
             Price: {currencysymbol}

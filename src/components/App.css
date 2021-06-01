@@ -1,13 +1,8 @@
-@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@100&display=swap");
+body {
+  font-family: "Roboto", sans-serif;
+}
 
-/* * {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: "JetBrains+Mono:wght@100", sans-serif;
-} */
-
-.Nav-darkMode {
+.header-darkMode {
   background-image: linear-gradient(
     to bottom,
     #0b0425,
@@ -23,10 +18,11 @@
     #581524,
     #59191b
   );
-  color: rgb(113, 67, 219) !important;
+  /* box-shadow: 0px 10px 24px 0px rgba(1, 0, 0, 0.25); */
+  color: goldenrod;
 }
 
-.Nav-lightMode {
+.header-lightMode {
   background-image: linear-gradient(
     to bottom,
     #d16ba5,
@@ -34,13 +30,13 @@
     #ba83ca,
     #aa8fd8,
     #9a9ae1,
-    #8aa7ec,
-    #79b3f4,
-    #69bff8,
-    #52cffe,
-    #41dfff,
-    #46eefa,
-    #5ffbf1
+    #86a3e8,
+    #71abeb,
+    #5db3eb,
+    #39bae8,
+    #09c1df,
+    #00c6d2,
+    #28cac1
   );
   color: rgb(113, 67, 219);
 }
@@ -48,13 +44,13 @@
 .Table-lightMode {
   background-image: linear-gradient(
     to bottom,
-    #5ffbf1,
-    #46eefa,
-    #41dfff,
-    #52cffe,
-    #69bff8,
-    #79b3f4,
-    #8aa7ec,
+    #28cac1,
+    #00c6d2,
+    #09c1df,
+    #39bae8,
+    #5db3eb,
+    #71abeb,
+    #86a3e8,
     #9a9ae1,
     #aa8fd8,
     #ba83ca,
@@ -80,7 +76,8 @@
     #130c2b,
     #0b0425
   );
-  color: rgb(113, 67, 219);
+
+  color: goldenrod;
 }
 
 .coin-search {
@@ -99,6 +96,7 @@
 
 .toggle-currency {
   padding-bottom: 40px;
+  border: none;
 }
 
 .coin-input {
@@ -120,11 +118,22 @@
   color: aliceblue;
 }
 
+.nav-buttons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.footer {
+  text-align: center;
+  padding: 4em 3em 1em 3em;
+  color: #0b0425;
+}
+
 @media (max-width: 670px) {
   .coin-input {
     width: 250px;
   }
   .coin-text {
-    font-size: 1.25em;
+    font-size: 1.5em;
   }
 }

@@ -1,3 +1,7 @@
+body {
+  font-family: "Roboto", sans-serif;
+}
+
 .coin-container {
   display: flex;
   justify-content: center;
@@ -6,27 +10,25 @@
 .coin-row {
   flex-direction: column;
   display: flex;
-  justify-items: start;
+  justify-items: center;
   align-items: center;
   height: 100px;
-  /* border-bottom: 2px solid goldenrod; */
   width: 90%;
   padding: 5px;
-  margin-bottom: 2em;
+  margin-bottom: 3em;
 }
 
 .coin {
   display: flex;
-  margin-right: 50px;
-  min-width: 200px;
+  margin-bottom: 0.5em;
 }
 
 .coin h1 {
   text-align: start;
-  margin-bottom: auto;
-  font-size: 18px;
+  margin: 0.4em 0em;
+  /* margin-top: 2em; */
+  font-size: 20px;
   text-transform: uppercase;
-  /* margin-right: 150px; */
   color: gold;
 }
 
@@ -37,9 +39,20 @@
   margin-bottom: 15px;
 }
 
+.userPrice-input {
+  margin-left: 5em;
+  width: 8em;
+  border: none;
+}
+
+.coin-img {
+  margin-top: 0.2em;
+}
+
 .coin-symbol {
   text-transform: uppercase;
   margin-left: 1em;
+  margin-top: 0.3em;
 }
 
 .coin-data {
@@ -50,7 +63,9 @@
 }
 
 .coin-price {
-  width: 130px;
+  flex-direction: row;
+  padding-top: 0.75em;
+  height: 0em;
 }
 
 .coin-volume {
@@ -63,6 +78,7 @@
 
 .coin-percent {
   width: 90px;
+  padding-top: 0.75em;
 }
 
 .red {
@@ -74,28 +90,34 @@
 }
 
 @media (max-width: 670px) {
-  /* h1 {
-    font-size: 30px;
-  } */
   .coin h1,
   p {
-    font-size: 0.6rem;
+    font-size: 0.7rem;
   }
   p {
     padding: 1px;
   }
+
+  .userPrice-input {
+    margin-left: 1em;
+    width: 5em;
+    border: none;
+  }
+
   .coin-price {
-    width: 75px;
+    width: max-content;
     margin-right: 7px;
+    padding-top: 0em;
   }
   .coin-volume {
-    width: 120px;
+    width: max-content;
   }
   .coin-percent {
-    width: 50px;
+    width: max-content;
+    padding-top: 0;
   }
   .coin-marketcap {
-    width: 150px;
+    width: max-content;
     margin-left: 5px;
   }
 }
