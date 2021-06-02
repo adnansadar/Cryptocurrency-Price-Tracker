@@ -1,6 +1,6 @@
 # Cryptocurrency Price Tracker
 
-This project has been deployed at [this link](https://crypto-pricetracker.herokuapp.com/).
+This Web App has been deployed at [this link](https://my-cryptotracker.netlify.app/).
 
 ## Screenshots
 ![](screenshot1.png)
