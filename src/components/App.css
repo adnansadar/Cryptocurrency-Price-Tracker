@@ -129,7 +129,7 @@ body {
   color: #0b0425;
 }
 
-@media (max-width: 670px) {
+@media (max-width: 900px) {
   .coin-input {
     width: 250px;
   }

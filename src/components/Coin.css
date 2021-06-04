@@ -89,7 +89,7 @@ body {
   color: rgb(6, 179, 6);
 }
 
-@media (max-width: 670px) {
+@media (max-width: 900px) {
   .coin h1,
   p {
     font-size: 0.7rem;

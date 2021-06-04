@@ -1,15 +1,12 @@
 import { React, useState } from "react";
+import emailjs from "emailjs-com";
+import { Formik, Form, Field } from "formik";
+import * as Yup from "yup";
+
 import Nav from "./Nav";
 import Footer from "./Footer";
 import "./App.css";
 import "./Contact.css";
-
-//  import { Link } from "react-router-dom";
-// import emailjs from "emailjs-com";
-import emailjs from "emailjs-com";
-
-import { Formik, Form, Field } from "formik";
-import * as Yup from "yup";
 
 const style1 = {
   width: "60%",
