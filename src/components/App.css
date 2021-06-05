@@ -12,13 +12,8 @@ body {
     #2e183e,
     #37183e,
     #40173e,
-    #49173d,
-    #501435,
-    #55132d,
-    #581524,
-    #59191b
+    #49173d
   );
-  /* box-shadow: 0px 10px 24px 0px rgba(1, 0, 0, 0.25); */
   color: goldenrod;
 }
 
@@ -33,10 +28,7 @@ body {
     #86a3e8,
     #71abeb,
     #5db3eb,
-    #39bae8,
-    #09c1df,
-    #00c6d2,
-    #28cac1
+    #39bae8
   );
   color: rgb(113, 67, 219);
 }
@@ -44,9 +36,6 @@ body {
 .Table-lightMode {
   background-image: linear-gradient(
     to bottom,
-    #28cac1,
-    #00c6d2,
-    #09c1df,
     #39bae8,
     #5db3eb,
     #71abeb,
@@ -58,15 +47,13 @@ body {
     #d16ba5
   );
   color: rgb(113, 67, 219);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  padding-top: 1em;
 }
 
 .Table-darkMode {
   background-image: linear-gradient(
     to bottom,
-    #59191b,
-    #581524,
-    #55132d,
-    #501435,
     #49173d,
     #40173e,
     #37183e,
@@ -76,8 +63,9 @@ body {
     #130c2b,
     #0b0425
   );
-
   color: goldenrod;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  padding-top: 1em;
 }
 
 .coin-search {
@@ -129,7 +117,7 @@ body {
   color: #0b0425;
 }
 
-@media (max-width: 670px) {
+@media (max-width: 900px) {
   .coin-input {
     width: 250px;
   }

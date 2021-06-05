@@ -50,6 +50,7 @@ export function Home() {
     <div>
       <div className={darkMode ? " header-darkMode" : "header-lightMode"}>
         <Nav
+          darkMode
           onClick={() => {
             setDarkMode(!darkMode);
           }}
@@ -112,11 +113,7 @@ export function Home() {
           );
         })}
       </div>
-      <div
-        className={
-          darkMode ? "footer header-darkMode" : "footer header-lightMode"
-        }
-      >
+      <div className={darkMode ? " header-darkMode" : " header-lightMode"}>
         <Footer />
       </div>
     </div>

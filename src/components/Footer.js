@@ -13,7 +13,14 @@ const Footer = () => {
     <div className="footer">
       <footer>
         <p>
-          <img className="mr-3" alt="" src={twitter} width="30" height="30" />
+          <img
+            className="mr-3"
+            alt=""
+            src={twitter}
+            width="30"
+            height="30"
+            onClick={() => history.push("https://twitter.com/dd_239")}
+          />
           <img className="mr-3" alt="" src={email} width="30" height="30" />
           <img
             className="mr-3"
@@ -21,7 +28,7 @@ const Footer = () => {
             src={linkedin}
             width="30"
             height="30"
-            onClick={(event) =>
+            onClick={() =>
               history.push("https://www.linkedin.com/in/adnansadar")
             }
           />
@@ -31,7 +38,7 @@ const Footer = () => {
             src={github}
             width="30"
             height="30"
-            onClick={(event) => history.push("https://github.com/adnansadar")}
+            onClick={() => history.push("https://github.com/adnansadar")}
           />
         </p>
         <p>Copyright &copy; 2021. All rights reserved</p>

@@ -5,15 +5,16 @@ body {
 .coin-container {
   display: flex;
   justify-content: center;
+  padding: 1em 2em;
 }
 
 .coin-row {
   flex-direction: column;
   display: flex;
-  justify-items: center;
-  align-items: center;
+  /* justify-items: center; */
+  /* align-items: center; */
   height: 100px;
-  width: 90%;
+  width: 100%;
   padding: 5px;
   margin-bottom: 3em;
 }
@@ -26,7 +27,6 @@ body {
 .coin h1 {
   text-align: start;
   margin: 0.4em 0em;
-  /* margin-top: 2em; */
   font-size: 20px;
   text-transform: uppercase;
   color: gold;
@@ -64,7 +64,7 @@ body {
 
 .coin-price {
   flex-direction: row;
-  padding-top: 0.75em;
+  /* padding-top: 0.75em; */
   height: 0em;
 }
 
@@ -86,10 +86,10 @@ body {
 }
 
 .green {
-  color: rgb(6, 179, 6);
+  color: rgb(15, 197, 15);
 }
 
-@media (max-width: 670px) {
+@media (max-width: 700px) {
   .coin h1,
   p {
     font-size: 0.7rem;
@@ -100,7 +100,7 @@ body {
 
   .userPrice-input {
     margin-left: 1em;
-    width: 5em;
+    width: 5.5em;
     border: none;
   }
 
