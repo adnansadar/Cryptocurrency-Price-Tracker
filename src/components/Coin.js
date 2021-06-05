@@ -1,5 +1,6 @@
 import React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { Spinner } from "react-bootstrap";
 
 const Coin = ({
   name,
@@ -12,9 +13,22 @@ const Coin = ({
   currencysymbol,
 }) => {
   const [userPrice, setUserPrice] = useState(null);
-  const [cryptoValue, setCryptoValue] = useState(null);
+  // const [cryptoValue, setCryptoValue] = useState(null);
+  const [isLoading, setisLoading] = useState(true);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setisLoading(false);
+    }, 1000);
+  }, []);
+
   // destructuring the props passed
-  return (
+  // if coin data is still being fetched conditionally render the spinner
+  return isLoading ? (
+    <div className="coin-container mb-5">
+      <Spinner animation="border" variant="warning" />
+    </div>
+  ) : (
     <div className="coin-container">
       <div className="mt-2 coin-row">
         <div className=" coin">
@@ -27,8 +41,6 @@ const Coin = ({
             <input
               type="number"
               className="form-control"
-              aria-label="Small"
-              aria-describedby="inputGroup-sizing-sm"
               placeholder="0"
               value={userPrice}
               onChange={(e) =>
@@ -41,8 +53,6 @@ const Coin = ({
             <input
               type="text"
               className="form-control"
-              aria-label="Small"
-              aria-describedby="inputGroup-sizing-sm"
               placeholder="0"
               readOnly
               value={
