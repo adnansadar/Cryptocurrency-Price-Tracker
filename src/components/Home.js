@@ -6,12 +6,14 @@ import Footer from "./Footer";
 import "./Coin.css";
 import "./App.css";
 import { Dropdown, DropdownButton, ButtonGroup } from "react-bootstrap";
+import { useTheme } from "../context/ThemeProvider";
 
 export function Home() {
   const [coins, setCoins] = useState([]);
   const [search, setSearch] = useState("");
   const [currency, setCurrency] = useState("inr");
-  const [darkMode, setDarkMode] = useState(true);
+  const { darkMode, toggleTheme } = useTheme();
+
   const url = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&order=market_cap_desc&per_page=20&page=1&sparkline=false`;
 
   // Making an API Call only on mount
@@ -23,7 +25,7 @@ export function Home() {
           setCoins(res.data);
         }) //storing the crypto data in coins state
         .catch((e) => console.log(e));
-    }, 500);
+    }, 400);
     return () => clearInterval(interval);
   }, [currency, url]);
 
@@ -49,12 +51,7 @@ export function Home() {
   return (
     <div>
       <div className={darkMode ? " header-darkMode" : "header-lightMode"}>
-        <Nav
-          darkMode
-          onClick={() => {
-            setDarkMode(!darkMode);
-          }}
-        />
+        <Nav darkMode onClick={toggleTheme} />
 
         <div className="coin-search">
           <h1 className=" coin-text">Crypto Price Tracker</h1>
@@ -67,7 +64,7 @@ export function Home() {
             ></input>
           </form>
         </div>
-        <div className="text-center toggle-currency">
+        <div className="toggle-currency text-center ">
           <div>
             {[DropdownButton].map((DropdownType, idx) => (
               <DropdownType

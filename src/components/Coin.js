@@ -1,6 +1,6 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { Spinner } from "react-bootstrap";
+import { Spinner, Button } from "react-bootstrap";
 
 const Coin = ({
   name,
@@ -12,14 +12,14 @@ const Coin = ({
   marketCap,
   currencysymbol,
 }) => {
-  const [userPrice, setUserPrice] = useState(null);
+  // const [userPrice, setUserPrice] = useState(null);
   // const [cryptoValue, setCryptoValue] = useState(null);
   const [isLoading, setisLoading] = useState(true);
 
   useEffect(() => {
     setTimeout(() => {
       setisLoading(false);
-    }, 1000);
+    }, 500);
   }, []);
 
   // destructuring the props passed
@@ -30,13 +30,33 @@ const Coin = ({
     </div>
   ) : (
     <div className="coin-container">
-      <div className="mt-2 coin-row">
-        <div className=" coin">
-          <img className="coin-img" src={image} alt="crypto" />
+      <div className="coin-row mt-2 ">
+        <div className="coin-row-header">
+          <img className="coin-logo" src={image} alt="crypto" />
           <h1>{name}</h1>
           <p className="coin-symbol mr-1">{symbol}</p>
+          <div className="coin-buttons">
+            <Button
+              type="submit"
+              variant="outline-warning"
+              size="sm"
+              className="coin-add-button ml-3"
+            >
+              +
+            </Button>
+          </div>
+          <div className="coin-buttons">
+            <Button
+              type="submit"
+              variant="outline-warning"
+              size="sm"
+              className="coin-remove-button ml-3"
+            >
+              -
+            </Button>
+          </div>
 
-          <div className="userPrice-input input-group input-group-sm ">
+          {/* <div className="userPrice-input input-group input-group-sm ">
             <div className="mt-1 mr-2">{currencysymbol}</div>
             <input
               type="number"
@@ -61,10 +81,10 @@ const Coin = ({
                   : (userPrice / price).toLocaleString()
               }
             ></input>
-          </div>
+          </div> */}
         </div>
 
-        <div className=" border-bottom border-warning coin-data">
+        <div className="coin-data border-bottom border-warning ">
           {/* toLocaleString used for formatting the figure */}
           <p className="coin-price">
             Price: {currencysymbol}

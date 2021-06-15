@@ -9,6 +9,8 @@ import Footer from "./Footer";
 import "./App.css";
 import "./Contact.css";
 
+import { useTheme } from "../context/ThemeProvider";
+
 const style1 = {
   width: "60%",
   margin: "2em auto",
@@ -42,7 +44,7 @@ function sendEmail(e) {
 }
 
 const Contact = () => {
-  const [darkMode, setDarkMode] = useState(true);
+  const { darkMode, toggleTheme } = useTheme();
   const [show, setShow] = useState(false);
   return (
     <Formik
@@ -51,7 +53,6 @@ const Contact = () => {
       // after submitting the form we are directed here
       onSubmit={(values, { setSubmitting }) => {
         setTimeout(() => {
-          console.log("check");
           setSubmitting(false);
         }, 1000);
       }}
@@ -68,17 +69,14 @@ const Contact = () => {
       {/* accessing formik properties */}
       {(formik, isSubmitting) => (
         <div className={darkMode ? " header-darkMode" : "header-lightMode"}>
-          <Nav
-            onClick={() => {
-              setDarkMode(!darkMode);
-            }}
-          />
+          <Nav onClick={toggleTheme} />
           <Form style={style1} onSubmit={sendEmail}>
             <h1 style={style2}>Get In Touch</h1>
             <div className="form-group">
               <label htmlFor="name">Name</label>
               <Field
                 name="name"
+                // use styling on the field to display error
                 className={
                   formik.touched.name && formik.errors.name
                     ? "form-control is-invalid "
@@ -86,6 +84,7 @@ const Contact = () => {
                 }
                 type="text"
               />
+              {/* if input field is clicked on and no input is given then return error using formik */}
               {formik.touched.name && formik.errors.name ? (
                 <div className="invalid-feedback">{formik.errors.name}</div>
               ) : null}
@@ -133,30 +132,21 @@ const Contact = () => {
                 cols={10}
               />
             </div>
-
-            {/* <div className="form-group">
-              <button
-                type="submit"
-                className="btn btn-outline-warning"
-                // while the button is already clicked for submitting, the user wont be able to spam the submit button
-                disabled={isSubmitting}
-                onSubmit={() => setShow(true)}
-              >
-                {isSubmitting ? "Please wait..." : "Submit"}
-              </button>
-            </div> */}
+            {/* Handling Toast */}
             <div
               style={{
                 position: "relative",
                 minHeight: "120px",
               }}
             >
+              {/* display in top right */}
               <Toast
                 style={{
                   position: "absolute",
                   top: 0,
                   right: 0,
                 }}
+                // toast will close automatically after 3 sec
                 onClose={() => setShow(false)}
                 show={show}
                 delay={3000}
@@ -180,6 +170,7 @@ const Contact = () => {
 
               <div className="form-group">
                 <Button
+                  // show toast on click
                   onClick={() => setShow(true)}
                   type="submit"
                   variant="outline-warning"
