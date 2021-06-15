@@ -11,20 +11,20 @@ body {
 .coin-row {
   flex-direction: column;
   display: flex;
-  /* justify-items: center; */
-  /* align-items: center; */
+  justify-items: center;
+  align-items: center;
   height: 100px;
   width: 100%;
   padding: 5px;
   margin-bottom: 3em;
 }
 
-.coin {
+.coin-row-header {
   display: flex;
   margin-bottom: 0.5em;
 }
 
-.coin h1 {
+.coin-row-header h1 {
   text-align: start;
   margin: 0.4em 0em;
   font-size: 20px;
@@ -32,20 +32,20 @@ body {
   color: gold;
 }
 
-.coin img {
+.coin-row-header img {
   height: 30px;
   width: 30px;
   margin-right: 10px;
   margin-bottom: 15px;
 }
 
-.userPrice-input {
+/* .userPrice-input {
   margin-left: 5em;
   width: 8em;
   border: none;
-}
+} */
 
-.coin-img {
+.coin-logo {
   margin-top: 0.2em;
 }
 
@@ -53,6 +53,17 @@ body {
   text-transform: uppercase;
   margin-left: 1em;
   margin-top: 0.3em;
+}
+
+/* .coin-header-button {
+  padding: 5px 12px;
+} */
+.coin-add-button {
+  padding: 5px 12px;
+}
+
+.coin-remove-button {
+  padding: 5px 13px;
 }
 
 .coin-data {
@@ -90,7 +101,11 @@ body {
 }
 
 @media (max-width: 700px) {
-  .coin h1,
+  /* .coin {
+    display: flex;
+    flex-direction: column;
+  } */
+  .coin-row-header h1,
   p {
     font-size: 0.7rem;
   }
@@ -98,11 +113,11 @@ body {
     padding: 1px;
   }
 
-  .userPrice-input {
+  /* .userPrice-input {
     margin-left: 1em;
     width: 5.5em;
     border: none;
-  }
+  } */
 
   .coin-price {
     width: max-content;

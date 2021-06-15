@@ -23,7 +23,7 @@ export function Home() {
           setCoins(res.data);
         }) //storing the crypto data in coins state
         .catch((e) => console.log(e));
-    }, 500);
+    }, 400);
     return () => clearInterval(interval);
   }, [currency, url]);
 
@@ -67,7 +67,7 @@ export function Home() {
             ></input>
           </form>
         </div>
-        <div className="text-center toggle-currency">
+        <div className="toggle-currency text-center ">
           <div>
             {[DropdownButton].map((DropdownType, idx) => (
               <DropdownType
