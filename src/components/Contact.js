@@ -9,6 +9,8 @@ import Footer from "./Footer";
 import "./App.css";
 import "./Contact.css";
 
+import { useTheme } from "../context/ThemeProvider";
+
 const style1 = {
   width: "60%",
   margin: "2em auto",
@@ -42,7 +44,7 @@ function sendEmail(e) {
 }
 
 const Contact = () => {
-  const [darkMode, setDarkMode] = useState(true);
+  const { darkMode, toggleTheme } = useTheme();
   const [show, setShow] = useState(false);
   return (
     <Formik
@@ -67,11 +69,7 @@ const Contact = () => {
       {/* accessing formik properties */}
       {(formik, isSubmitting) => (
         <div className={darkMode ? " header-darkMode" : "header-lightMode"}>
-          <Nav
-            onClick={() => {
-              setDarkMode(!darkMode);
-            }}
-          />
+          <Nav onClick={toggleTheme} />
           <Form style={style1} onSubmit={sendEmail}>
             <h1 style={style2}>Get In Touch</h1>
             <div className="form-group">
