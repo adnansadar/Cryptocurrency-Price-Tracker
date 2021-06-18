@@ -11,12 +11,8 @@ import { Link } from "react-router-dom";
 import { useTheme } from "../context/ThemeProvider";
 
 const Nav = () => {
-  // const [darkModeIcon, setDarkModeIcon] = useState(true);
   const { darkMode, toggleTheme } = useTheme();
-  // const handleClick = () => {
-  //   onClick(onClick);
-  //   setDarkModeIcon((prevState) => !prevState);
-  // };
+
   return (
     <div className="nav-buttons">
       <div>
