@@ -1,6 +1,9 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Spinner, Button } from "react-bootstrap";
+import Portfolio from "./Portfolio";
+
+const handleRemoveClick = () => {};
 
 const Coin = ({
   name,
@@ -12,8 +15,6 @@ const Coin = ({
   marketCap,
   currencysymbol,
 }) => {
-  // const [userPrice, setUserPrice] = useState(null);
-  // const [cryptoValue, setCryptoValue] = useState(null);
   const [isLoading, setisLoading] = useState(true);
 
   useEffect(() => {
@@ -21,6 +22,19 @@ const Coin = ({
       setisLoading(false);
     }, 500);
   }, []);
+
+  const handleAddClick = () => {
+    <Portfolio
+      name={name}
+      image={image}
+      symbol={symbol}
+      price={price}
+      marketCap={marketCap}
+      priceChange={priceChange}
+      volume={volume}
+      currencysymbol={currencysymbol}
+    />;
+  };
 
   // destructuring the props passed
   // if coin data is still being fetched conditionally render the spinner
@@ -37,51 +51,26 @@ const Coin = ({
           <p className="coin-symbol mr-1">{symbol}</p>
           <div className="coin-buttons">
             <Button
+              className="coin-add-button ml-3"
               type="submit"
               variant="outline-warning"
               size="sm"
-              className="coin-add-button ml-3"
+              onClick={handleAddClick}
             >
               +
             </Button>
           </div>
           <div className="coin-buttons">
             <Button
+              className="coin-remove-button ml-3"
               type="submit"
               variant="outline-warning"
               size="sm"
-              className="coin-remove-button ml-3"
+              onClick={handleRemoveClick}
             >
               -
             </Button>
           </div>
-
-          {/* <div className="userPrice-input input-group input-group-sm ">
-            <div className="mt-1 mr-2">{currencysymbol}</div>
-            <input
-              type="number"
-              className="form-control"
-              placeholder="0"
-              value={userPrice}
-              onChange={(e) =>
-                e.target.value === "-" ? null : setUserPrice(e.target.value)
-              }
-            ></input>
-          </div>
-          <div className="userPrice-input input-group input-group-sm">
-            <div className="mt-1 mr-2">{symbol}</div>
-            <input
-              type="text"
-              className="form-control"
-              placeholder="0"
-              readOnly
-              value={
-                userPrice === 0 || userPrice == null
-                  ? 0
-                  : (userPrice / price).toLocaleString()
-              }
-            ></input>
-          </div> */}
         </div>
 
         <div className="coin-data border-bottom border-warning ">

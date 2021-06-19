@@ -1,33 +1,18 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React from "react";
 import Nav from "./Nav";
 import Coin from "./Coin";
 import Footer from "./Footer";
-import "./Coin.css";
-import "./App.css";
+import "../assets/css/Coin.css";
+import "../App.css";
 import { Dropdown, DropdownButton, ButtonGroup } from "react-bootstrap";
 import { useTheme } from "../context/ThemeProvider";
+import { useCoinData } from "../context/CoinDataProvider";
 
 export function Home() {
-  const [coins, setCoins] = useState([]);
-  const [search, setSearch] = useState("");
-  const [currency, setCurrency] = useState("inr");
+  const { coins, setCoins } = useCoinData();
+  const { search, setSearch } = useCoinData();
+  const { currency, setCurrency } = useCoinData();
   const { darkMode, toggleTheme } = useTheme();
-
-  const url = `https://api.coingecko.com/api/v3/coins/markets?vs_currency=${currency}&order=market_cap_desc&per_page=20&page=1&sparkline=false`;
-
-  // Making an API Call only on mount
-  useEffect(() => {
-    const interval = setInterval(() => {
-      axios
-        .get(url)
-        .then((res) => {
-          setCoins(res.data);
-        }) //storing the crypto data in coins state
-        .catch((e) => console.log(e));
-    }, 400);
-    return () => clearInterval(interval);
-  }, [currency, url]);
 
   const dictionary = {
     inr: "₹",
@@ -40,7 +25,7 @@ export function Home() {
     chf: "₣",
   };
 
-  const handleChange = (e) => {
+  const handleSearch = (e) => {
     setSearch(e.target.value); //value entered in the search box stored in search state
   };
 
@@ -60,7 +45,7 @@ export function Home() {
               type="text"
               className="coin-input"
               placeholder="Search"
-              onChange={handleChange}
+              onChange={handleSearch}
             ></input>
           </form>
         </div>

@@ -6,8 +6,8 @@ import { Toast, Button } from "react-bootstrap";
 
 import Nav from "./Nav";
 import Footer from "./Footer";
-import "./App.css";
-import "./Contact.css";
+import "../App.css";
+import "../assets/css/Contact.css";
 
 import { useTheme } from "../context/ThemeProvider";
 
