@@ -39,12 +39,6 @@ body {
   margin-bottom: 15px;
 }
 
-/* .userPrice-input {
-  margin-left: 5em;
-  width: 8em;
-  border: none;
-} */
-
 .coin-logo {
   margin-top: 0.2em;
 }
@@ -55,15 +49,12 @@ body {
   margin-top: 0.3em;
 }
 
-/* .coin-header-button {
-  padding: 5px 12px;
-} */
 .coin-add-button {
   padding: 5px 12px;
 }
 
 .coin-remove-button {
-  padding: 5px 13px;
+  padding: 5px 12px;
 }
 
 .coin-data {

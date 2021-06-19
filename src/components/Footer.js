@@ -4,7 +4,7 @@ import twitter from "../assets/images/twitter.svg";
 import email from "../assets/images/email.svg";
 import linkedin from "../assets/images/linkedin.svg";
 import github from "../assets/images/github.svg";
-import "./App.css";
+import "../App.css";
 
 import React from "react";
 
