@@ -39,7 +39,8 @@ export function Home() {
         <Nav darkMode onClick={toggleTheme} />
 
         <div className="coin-search">
-          <h1 className=" coin-text">Crypto</h1>
+          <h1 className=" coin-text">Crypto Price</h1>
+
           <form>
             <input
               type="text"
