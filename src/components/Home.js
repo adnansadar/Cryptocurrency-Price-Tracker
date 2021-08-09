@@ -40,6 +40,7 @@ export function Home() {
 
         <div className="coin-search">
           <h1 className=" coin-text">Crypto Price</h1>
+
           <form>
             <input
               type="text"
