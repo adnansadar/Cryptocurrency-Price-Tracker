@@ -1,25 +1,5 @@
 # Cryptocurrency Price Tracker
 
-This Web App has been deployed at [this link](https://my-cryptotracker.netlify.app/).
-
-## Screenshots
-![Screenshot from 2021-06-02 11-24-55](https://user-images.githubusercontent.com/45177064/120499908-0fca3c00-c3de-11eb-8e28-a07f0a7d7bc6.png)
-
-![Screenshot from 2021-06-02 20-12-47](https://user-images.githubusercontent.com/45177064/120501165-068d9f00-c3df-11eb-9795-8b110a26bd94.png)
-
-![Screenshot from 2021-06-02 20-10-14](https://user-images.githubusercontent.com/45177064/120500860-c8907b00-c3de-11eb-8ad2-7a713820f0da.png)
-
-![Screenshot from 2021-06-02 20-18-44](https://user-images.githubusercontent.com/45177064/120502164-d1ce1780-c3df-11eb-8bff-66406df3a055.png)
-
-
-
-
-
-
-
-
-
-
 ## About the Project
 
 This single page application has been designed using ReactJS for a smooth and fast UI. Functional Components along with React Hooks have been made use of for state management, useEffect() has been used to fetch cryptocurrency data on initial mount of the component. useState() is used to store the coins data in an array and the search input entered by the user as a string. Event handlers have been used to update the App.js component's state.
@@ -29,7 +9,6 @@ Array filter and map functions have been made use of to get matching results as 
 **New Features:** 
 - Dark Mode Switch Functionality
 - Integrated bootstrap with the current project to make it responsive with all devices and also made use of linear gradient CSS property to get a better UI look with a combination of 3 colors.
-- Contact Page has been added to get in touch via email. [EmailJS has been used for providing the email service, Formik2 has been used for form validation]
 - User can enter the amount(any preferred currency) he/she wants to invest in the respective cryptocurrency, the equivalent crypto coins that can be bought with that amount will be displayed. 
 
 **Upcoming Features:**
