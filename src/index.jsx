@@ -1,18 +1,16 @@
 import React from "react";
-import ReactDOM from "react-dom";
+import { createRoot } from "react-dom/client";
 import App from "./App";
-import { Router } from "react-router";
-import history from "./history";
 import { ThemeProvider } from "./context/ThemeProvider";
 import { CoinDataProvider } from "./context/CoinDataProvider";
+import "./App.css";
 
-ReactDOM.render(
-  <Router history={history}>
+createRoot(document.getElementById("root")).render(
+  <React.StrictMode>
     <ThemeProvider>
       <CoinDataProvider>
         <App />
       </CoinDataProvider>
     </ThemeProvider>
-  </Router>,
-  document.getElementById("root")
+  </React.StrictMode>
 );
