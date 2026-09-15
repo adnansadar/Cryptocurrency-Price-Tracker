@@ -1,31 +1,31 @@
 {
-  "name": "crypto-tracker",
-  "version": "0.1.0",
+  "name": "crypto-research-terminal",
+  "version": "1.0.0",
   "private": true,
-  "dependencies": {
-    "react": "^19.3.0",
-    "react-dom": "^19.3.0"
+  "workspaces": [
+    "packages/contracts",
+    "apps/api",
+    "apps/web"
+  ],
+  "scripts": {
+    "dev": "npm run build -w @crypto-terminal/contracts && concurrently -n API,WEB -c yellow,cyan \"npm run dev -w @crypto-terminal/api\" \"npm run dev -w @crypto-terminal/web\"",
+    "build": "npm run build -w @crypto-terminal/contracts && npm run build -w @crypto-terminal/api && npm run build -w @crypto-terminal/web",
+    "typecheck": "npm run build -w @crypto-terminal/contracts && npm run typecheck -w @crypto-terminal/api && npm run typecheck -w @crypto-terminal/web",
+    "test": "npm run test -w @crypto-terminal/api && npm run test -w @crypto-terminal/web",
+    "db:generate": "npm run db:generate -w @crypto-terminal/api",
+    "db:migrate": "npm run db:migrate -w @crypto-terminal/api",
+    "format:check": "prettier --check .",
+    "lint": "npm run lint -w @crypto-terminal/api && npm run lint -w @crypto-terminal/web"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^6.1.1",
-    "vite": "^8.3.0"
+    "@eslint/js": "^9.36.0",
+    "concurrently": "^9.2.1",
+    "eslint": "^9.36.0",
+    "eslint-config-next": "16.3.5",
+    "prettier": "^3.6.2",
+    "typescript-eslint": "^8.44.1"
   },
-  "scripts": {
-    "dev": "vite",
-    "start": "vite",
-    "build": "vite build",
-    "preview": "vite preview"
-  },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "engines": {
+    "node": ">=22"
   }
 }
