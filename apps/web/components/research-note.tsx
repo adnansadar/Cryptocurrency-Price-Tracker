@@ -1,0 +1,146 @@
+"use client";
+
+import { useState } from "react";
+import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
+import {
+  deleteResearchNote,
+  getResearchNotes,
+  saveResearchNote,
+} from "@/lib/api";
+import { AuthGateDialog } from "./auth-gate-dialog";
+import { useAuth } from "./auth-provider";
+
+export function ResearchNote({
+  coinId,
+  coinName,
+}: {
+  coinId: string;
+  coinName: string;
+}) {
+  const { user, isPending: authPending } = useAuth();
+  const [gateOpen, setGateOpen] = useState(false);
+  const notes = useQuery({
+    queryKey: ["workspace", "notes", user?.id],
+    queryFn: getResearchNotes,
+    enabled: Boolean(user),
+  });
+
+  if (!user)
+    return (
+      <>
+        <section className="note-panel locked-note">
+          <div>
+            <p className="eyebrow">Private workspace</p>
+            <h2>Research note</h2>
+            <p>Sign up to capture your thesis and risks about {coinName}.</p>
+          </div>
+          <button
+            className="locked-note-preview"
+            disabled={authPending}
+            onClick={() => setGateOpen(true)}
+          >
+            <span aria-hidden="true">🔒</span>
+            Sign up to write a private note
+          </button>
+        </section>
+        <AuthGateDialog
+          open={gateOpen}
+          onClose={() => setGateOpen(false)}
+          feature="private research notes"
+        />
+      </>
+    );
+
+  if (notes.isLoading)
+    return (
+      <section className="note-panel">Loading your research note…</section>
+    );
+
+  if (notes.isError)
+    return (
+      <section className="note-panel">
+        <div>
+          <p className="eyebrow">Private workspace</p>
+          <h2>Research note unavailable</h2>
+        </div>
+        <p>Please check your connection and refresh the page.</p>
+      </section>
+    );
+
+  const note = notes.data?.find((item) => item.coinId === coinId);
+  return (
+    <ResearchNoteEditor
+      key={coinId}
+      coinId={coinId}
+      coinName={coinName}
+      userId={user.id}
+      initialBody={note?.body ?? ""}
+    />
+  );
+}
+
+function ResearchNoteEditor({
+  coinId,
+  coinName,
+  userId,
+  initialBody,
+}: {
+  coinId: string;
+  coinName: string;
+  userId: string;
+  initialBody: string;
+}) {
+  const queryClient = useQueryClient();
+  const [body, setBody] = useState(initialBody);
+  const [saved, setSaved] = useState(false);
+  const mutation = useMutation({
+    mutationFn: async (value: string) => {
+      if (value.trim()) await saveResearchNote(coinId, value);
+      else await deleteResearchNote(coinId);
+    },
+    onSuccess: () => {
+      setSaved(true);
+      void queryClient.invalidateQueries({
+        queryKey: ["workspace", "notes", userId],
+      });
+    },
+  });
+
+  return (
+    <section className="note-panel">
+      <div>
+        <p className="eyebrow">Private workspace</p>
+        <h2>Research note</h2>
+        <p>
+          Capture your thesis, risks, and follow-up questions about {coinName}.
+        </p>
+      </div>
+      <label>
+        <span className="sr-only">Research note for {coinName}</span>
+        <textarea
+          value={body}
+          maxLength={5000}
+          onChange={(event) => {
+            setBody(event.target.value);
+            setSaved(false);
+          }}
+          placeholder="Example: Revisit token supply changes before comparing valuation…"
+        />
+      </label>
+      <div>
+        <small>
+          {mutation.isError
+            ? "Could not save. Try again."
+            : `${body.length} / 5,000`}
+        </small>
+        <button
+          className="primary-button"
+          disabled={mutation.isPending}
+          onClick={() => mutation.mutate(body)}
+        >
+          {mutation.isPending ? "Saving…" : saved ? "Saved" : "Save note"}
+        </button>
+      </div>
+    </section>
+  );
+}
