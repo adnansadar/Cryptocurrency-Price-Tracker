@@ -1,38 +1,139 @@
-# Cryptocurrency Price Tracker
+# Crypto Research Terminal
 
-## About the Project
+A production-style cryptocurrency research workspace for screening the top 250 assets, studying historical performance, comparing risk, and keeping a private research log.
 
-This single page application has been designed using ReactJS for a smooth and fast UI. Functional Components along with React Hooks have been made use of for state management, useEffect() has been used to fetch cryptocurrency data on initial mount of the component. useState() is used to store the coins data in an array and the search input entered by the user as a string. Event handlers have been used to update the App.js component's state.
-Object Destructuring has been used to pass the coin data as props to Coin.js component. This is the component which will render all the Cryptocurrency data initially and later on showing only necessary results as the user searches.
-Array filter and map functions have been made use of to get matching results as user enter words in the search box.
+The project is intentionally an informational research product. It does not execute trades or provide personalized financial advice.
 
-**New Features:** 
-- Dark Mode Switch Functionality
-- Integrated bootstrap with the current project to make it responsive with all devices and also made use of linear gradient CSS property to get a better UI look with a combination of 3 colors.
-- User can enter the amount(any preferred currency) he/she wants to invest in the respective cryptocurrency, the equivalent crypto coins that can be bought with that amount will be displayed. 
+## What it demonstrates
 
-**Upcoming Features:**
-- Add to Portfolio (Allows user to keep track of their crypto investments)
+- A responsive, accessible Next.js 16 interface using Server and Client Components deliberately
+- A versioned Express 5 API that isolates CoinGecko, validates input, rate-limits clients, and normalizes errors
+- Shared runtime and compile-time contracts with TypeScript and Zod
+- Server-side market filtering, sorting, category selection, and pagination
+- Line and OHLC charts with accessible tabular summaries
+- Normalized return, annualized volatility, maximum drawdown, and correlation analysis
+- Account-only watchlists, named lists, saved screens, and notes in PostgreSQL
+- Google OAuth and verified email/password authentication through Better Auth
+- Redis-compatible provider caching with a bounded in-memory fallback
+- Unit, integration, accessibility, and end-to-end test foundations
 
-_This is an ongoing project, feel free to contribute and open pull requests. I would love to know your inputs!_
+## Architecture
 
-## Available Scripts
+```text
+Browser
+  │
+  ▼
+Next.js web app (apps/web)
+  │  shared Zod contracts
+  ▼
+Express API (apps/api) ─────► PostgreSQL (accounts + research)
+  │               │
+  │               └────────► Redis (distributed cache)
+  ▼
+CoinGecko API
+```
 
-### `npm install`
+The browser never calls CoinGecko directly. Express provides a stable application contract, protects the upstream provider, and preserves a clean seam for future data sources.
 
-Installs all the dependencies of the project.
-If you don't have yarn installed, you can run the command `npm install --global yarn`. To download NodeJS on your system if you already don't have it installed, you can download it from [here](https://nodejs.org/en/).
+## Product areas
 
-In the project directory, you can run:
+### Market screener
 
-### `npm start`
+- Top-250 snapshot with market breadth and BTC dominance
+- Search, category, currency, valuation, liquidity, momentum, and ATH-distance filters
+- Sortable and user-configurable columns
+- Shareable URL state, saved screens, watchlist filtering, and pagination
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+### Asset research
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+- Dedicated asset routes with market, supply, ATH/ATL, and project metadata
+- Price and candlestick modes across 7D, 30D, 90D, and 1Y ranges
+- Private account-backed research notes with no guest workspace persistence
 
-### Acknowledgements
+### Comparison lab
 
-[Youtube Video](https://www.youtube.com/watch?v=9ohK7CapmIs) By Brian Design
+- Two to four assets per comparison
+- Rebased percentage-performance chart
+- Total return, annualized volatility, maximum drawdown, average volume, and correlation
+
+The calculations describe historical observations, not forecasts. Formulas live in `apps/api/src/analytics.ts` and are covered by unit tests.
+
+## Local development
+
+Node 22 is required.
+
+```bash
+npm install
+npm run db:generate
+npm run dev
+```
+
+Open `http://localhost:3000`. The API runs on `http://localhost:4000`.
+
+Public market and asset research work without a database or authentication credentials. Saving workspace data requires an account. Copy `.env.example` to `.env` when enabling optional services.
+
+## Workspace persistence and authentication
+
+Start PostgreSQL and Redis:
+
+```bash
+docker compose up -d postgres redis
+npm run db:migrate
+```
+
+Create a Google OAuth web application and provide `GOOGLE_CLIENT_ID`, `GOOGLE_CLIENT_SECRET`, `BETTER_AUTH_SECRET`, and `BETTER_AUTH_URL`. For email/password accounts, also configure `RESEND_API_KEY` and a verified `AUTH_EMAIL_FROM` sender. The web app discovers available authentication methods from the API.
+
+For local Google OAuth, use this authorized redirect URI:
+
+```text
+http://localhost:4000/api/auth/callback/google
+```
+
+Guests can browse markets, comparisons, and asset research. Watchlists, saved screens, and private notes are locked until sign-in and are never stored in browser local storage. The selected color theme remains local to the browser.
+
+## Commands
+
+| Command                                    | Purpose                                |
+| ------------------------------------------ | -------------------------------------- |
+| `npm run dev`                              | Run the API and web app together       |
+| `npm run build`                            | Build contracts, API, and web app      |
+| `npm run typecheck`                        | Check all TypeScript workspaces        |
+| `npm test`                                 | Run API and web unit/integration tests |
+| `npm run db:generate`                      | Generate the Prisma client             |
+| `npm run db:migrate`                       | Apply local PostgreSQL migrations      |
+| `npm run test:e2e -w @crypto-terminal/web` | Run Playwright desktop/mobile journeys |
+
+## Reliability and accessibility
+
+- Provider requests have timeouts, short-lived cache keys, normalized failure responses, and request IDs.
+- Market rows remain visible during background refreshes through TanStack Query placeholder data.
+- Keyboard focus, reduced motion, explicit positive/negative signs, responsive cards, semantic tables, and chart data summaries are included.
+- Structured API logs, `/health`, response cache state, and upstream error codes provide operational visibility.
+
+## API surface
+
+```text
+GET /health
+GET /openapi.json
+GET /v1/markets
+GET /v1/categories
+GET /v1/coins/:coinId
+GET /v1/coins/:coinId/history
+GET /v1/coins/:coinId/ohlc
+GET /v1/compare
+CRUD /v1/watchlists
+GET/PUT/DELETE /v1/watchlist
+CRUD /v1/saved-screens
+CRUD /v1/notes
+```
+
+Authenticated workspace routes use Better Auth session cookies and enforce resource ownership in every database query.
+
+## Deliberate tradeoffs
+
+- Polling is used instead of paid WebSocket access so the public demo can remain on free tiers.
+- The market overview represents the fetched top-250 universe rather than claiming to be a complete global index.
+- Public research is available without an account; all persistent workspace features require authentication.
+- The project stays a modular monolith with one explicit API boundary instead of introducing unnecessary microservices.
+
+Market data is provided by CoinGecko. Financial charts use Lightweight Charts and retain TradingView attribution.
