@@ -1,8 +1,8 @@
 import crypto from "node:crypto";
 import cors from "cors";
 import express, { type ErrorRequestHandler } from "express";
-import rateLimit from "express-rate-limit";
-import helmet from "helmet";
+import { rateLimit } from "express-rate-limit";
+import * as helmetModule from "helmet";
 import { pinoHttp, type Options as PinoHttpOptions } from "pino-http";
 import { toNodeHandler } from "better-auth/node";
 import { ZodError } from "zod";
@@ -27,7 +27,11 @@ type CreateAppOptions = {
 export function createApp(options: CreateAppOptions = {}) {
   const app = express();
   app.disable("x-powered-by");
-  app.use(helmet({ crossOriginResourcePolicy: { policy: "cross-origin" } }));
+  app.use(
+    helmetModule.default({
+      crossOriginResourcePolicy: { policy: "cross-origin" },
+    }),
+  );
   app.use(
     cors({
       origin: config.webOrigin,
