@@ -7,19 +7,36 @@ export class HybridCache {
   private readonly memory = new Map<string, Entry>();
   private redis: RedisClientType | null = null;
   private redisConnection: Promise<void> | null = null;
+  private redisRetryAt = 0;
 
   constructor(private readonly maxEntries = 150) {}
 
   private async connectRedis() {
-    if (!config.redisUrl || this.redis?.isReady) return;
+    if (
+      !config.redisUrl ||
+      this.redis?.isReady ||
+      Date.now() < this.redisRetryAt
+    )
+      return;
     if (!this.redisConnection) {
-      this.redis = createClient({ url: config.redisUrl });
-      this.redis.on("error", () => undefined);
-      this.redisConnection = this.redis
+      const client = createClient({
+        url: config.redisUrl,
+        socket: {
+          connectTimeout: 1_000,
+          reconnectStrategy: false,
+        },
+      }) as RedisClientType;
+      this.redis = client;
+      client.on("error", () => undefined);
+      this.redisConnection = client
         .connect()
         .then(() => undefined)
         .catch(() => {
-          this.redis = null;
+          if (this.redis === client) this.redis = null;
+          this.redisRetryAt = Date.now() + 30_000;
+        })
+        .finally(() => {
+          this.redisConnection = null;
         });
     }
     await this.redisConnection;

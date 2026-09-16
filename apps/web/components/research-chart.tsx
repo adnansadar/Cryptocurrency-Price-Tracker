@@ -116,7 +116,8 @@ export function ResearchChart({ coinId, currency }: Props) {
     };
   }, [data, history.data, mode, ohlc.data, range]);
 
-  const recent = history.data?.slice(-5).reverse() ?? [];
+  const recentHistory = history.data?.slice(-5).reverse() ?? [];
+  const recentOhlc = ohlc.data?.slice(-5).reverse() ?? [];
   return (
     <section className="chart-panel" aria-labelledby="price-history-title">
       <div className="panel-heading">
@@ -125,25 +126,31 @@ export function ResearchChart({ coinId, currency }: Props) {
           <h2 id="price-history-title">Price history</h2>
         </div>
         <div className="chart-controls">
-          <div className="segmented-control">
+          <div className="segmented-control" aria-label="Chart type">
             <button
+              type="button"
               className={mode === "line" ? "active" : ""}
+              aria-pressed={mode === "line"}
               onClick={() => setMode("line")}
             >
               Line
             </button>
             <button
+              type="button"
               className={mode === "ohlc" ? "active" : ""}
+              aria-pressed={mode === "ohlc"}
               onClick={() => setMode("ohlc")}
             >
               Candles
             </button>
           </div>
-          <div className="range-control">
+          <div className="range-control" aria-label="Chart range">
             {(["7", "30", "90", "365"] as ChartRange[]).map((value) => (
               <button
+                type="button"
                 key={value}
                 className={range === value ? "active" : ""}
+                aria-pressed={range === value}
                 onClick={() => setRange(value)}
               >
                 {value === "365" ? "1Y" : `${value}D`}
@@ -165,25 +172,52 @@ export function ResearchChart({ coinId, currency }: Props) {
         <div ref={container} className="chart-container" aria-hidden="true" />
       )}
       <details className="accessible-data">
-        <summary>View recent prices as a table</summary>
-        <table>
-          <thead>
-            <tr>
-              <th>Date</th>
-              <th>Price</th>
-              <th>Volume</th>
-            </tr>
-          </thead>
-          <tbody>
-            {recent.map((point) => (
-              <tr key={point.timestamp}>
-                <td>{new Date(point.timestamp).toLocaleDateString()}</td>
-                <td>{formatCurrency(point.price, currency)}</td>
-                <td>{formatCurrency(point.volume, currency, true)}</td>
+        <summary>
+          View recent {mode === "line" ? "prices" : "candles"} as a table
+        </summary>
+        {mode === "line" ? (
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Price</th>
+                <th>Volume</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {recentHistory.map((point) => (
+                <tr key={point.timestamp}>
+                  <td>{new Date(point.timestamp).toLocaleDateString()}</td>
+                  <td>{formatCurrency(point.price, currency)}</td>
+                  <td>{formatCurrency(point.volume, currency, true)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        ) : (
+          <table>
+            <thead>
+              <tr>
+                <th>Date</th>
+                <th>Open</th>
+                <th>High</th>
+                <th>Low</th>
+                <th>Close</th>
+              </tr>
+            </thead>
+            <tbody>
+              {recentOhlc.map((point) => (
+                <tr key={point.timestamp}>
+                  <td>{new Date(point.timestamp).toLocaleDateString()}</td>
+                  <td>{formatCurrency(point.open, currency)}</td>
+                  <td>{formatCurrency(point.high, currency)}</td>
+                  <td>{formatCurrency(point.low, currency)}</td>
+                  <td>{formatCurrency(point.close, currency)}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
       </details>
     </section>
   );

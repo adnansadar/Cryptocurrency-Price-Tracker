@@ -112,6 +112,9 @@ The contracts workspace must be built before downstream workspaces consume newly
 - Add or update tests whenever behavior, contracts, authorization, redirect validation, persistence, or formatting logic changes.
 - API tests use Vitest and Supertest and live next to source files as `*.test.ts`.
 - Web unit tests use Vitest and Testing Library; end-to-end and accessibility coverage uses Playwright.
+- After browser-visible changes, use the `computer-use` skill with the Codex in-app browser for a live smoke test of the changed journey at the relevant desktop and mobile breakpoints.
+- During the live browser pass, verify interaction results and applicable loading, error, keyboard-focus, and accessibility states using fresh visual and accessibility output.
+- Keep `npm run test:e2e -w @crypto-terminal/web` as the deterministic automated browser suite; it complements rather than replaces the live in-app-browser pass. If the in-app browser remains unavailable after documented recovery, run Playwright and disclose the limitation at handoff.
 - Authentication or workspace changes must cover guest `401` responses and cross-user ownership boundaries.
 - UI locking changes must cover guests, authenticated users, sign-out transitions, keyboard behavior, and return links.
 - Before handing off a broad change, run `npm run typecheck`, `npm run lint`, `npm test`, and `npm run build`. Run Playwright when a browser-visible journey changed.

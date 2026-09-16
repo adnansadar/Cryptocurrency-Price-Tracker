@@ -3,7 +3,7 @@ import cors from "cors";
 import express, { type ErrorRequestHandler } from "express";
 import rateLimit from "express-rate-limit";
 import helmet from "helmet";
-import { pinoHttp } from "pino-http";
+import { pinoHttp, type Options as PinoHttpOptions } from "pino-http";
 import { toNodeHandler } from "better-auth/node";
 import { ZodError } from "zod";
 import { auth } from "./auth.js";
@@ -19,7 +19,12 @@ import { marketRouter } from "./market-routes.js";
 import { createOpenApiDocument } from "./openapi.js";
 import { workspaceRouter } from "./workspace-routes.js";
 
-export function createApp() {
+type CreateAppOptions = {
+  autoLogging?: boolean;
+  logStream?: PinoHttpOptions["stream"];
+};
+
+export function createApp(options: CreateAppOptions = {}) {
   const app = express();
   app.disable("x-powered-by");
   app.use(helmet({ crossOriginResourcePolicy: { policy: "cross-origin" } }));
@@ -37,7 +42,21 @@ export function createApp() {
     response.setHeader("x-request-id", requestId);
     next();
   });
-  app.use(pinoHttp({ autoLogging: process.env.NODE_ENV !== "test" }));
+  app.use(
+    pinoHttp({
+      autoLogging: options.autoLogging ?? process.env.NODE_ENV !== "test",
+      stream: options.logStream,
+      redact: {
+        paths: [
+          'req.headers["authorization"]',
+          'req.headers["cookie"]',
+          'req.headers["proxy-authorization"]',
+          'res.headers["set-cookie"]',
+        ],
+        censor: "[Redacted]",
+      },
+    }),
+  );
 
   if (auth) app.all("/api/auth/*splat", toNodeHandler(auth));
   else

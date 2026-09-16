@@ -1,3 +1,4 @@
+import { Writable } from "node:stream";
 import request from "supertest";
 import { describe, expect, it } from "vitest";
 import { createApp } from "./app.js";
@@ -49,5 +50,25 @@ describe("API application", () => {
       .expect(200);
     expect(response.body.openapi).toBe("3.1.0");
     expect(response.body.paths["/v1/markets"]).toBeTruthy();
+  });
+
+  it("redacts credentials from structured request logs", async () => {
+    let output = "";
+    const logStream = new Writable({
+      write(chunk, _encoding, callback) {
+        output += chunk.toString();
+        callback();
+      },
+    });
+
+    await request(createApp({ autoLogging: true, logStream }))
+      .get("/health")
+      .set("authorization", "Bearer super-secret-token")
+      .set("cookie", "better-auth.session_token=super-secret-cookie")
+      .expect(200);
+
+    expect(output).toContain("[Redacted]");
+    expect(output).not.toContain("super-secret-token");
+    expect(output).not.toContain("super-secret-cookie");
   });
 });

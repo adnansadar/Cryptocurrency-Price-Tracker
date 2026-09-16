@@ -394,10 +394,11 @@ export function MarketScreener({
               </option>
             ))}
           </select>
-          <div className="segmented-control">
+          <div className="segmented-control" aria-label="Market scope">
             <button
               type="button"
               className={!showWatchlist ? "active" : ""}
+              aria-pressed={!showWatchlist}
               onClick={() => handleWatchlistMode(false)}
             >
               All
@@ -405,6 +406,7 @@ export function MarketScreener({
             <button
               type="button"
               className={showWatchlist ? "active" : ""}
+              aria-pressed={showWatchlist}
               onClick={() => handleWatchlistMode(true)}
             >
               Watchlist

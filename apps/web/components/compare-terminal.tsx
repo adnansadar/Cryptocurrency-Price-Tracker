@@ -207,7 +207,7 @@ function CryptocurrencySelect({
   );
 }
 
-function ComparisonChart({
+export function ComparisonChart({
   assets,
   metric,
   currency,
@@ -277,12 +277,49 @@ function ComparisonChart({
       chartRef.current = null;
     };
   }, [assets, currency, metric]);
+  const latest = assets.flatMap((asset) => {
+    const point = asset.points.at(-1);
+    return point ? [{ asset, point }] : [];
+  });
   return (
-    <div
-      ref={container}
-      className="chart-container"
-      aria-label={`${comparisonMetrics[metric]} comparison chart`}
-    />
+    <>
+      <div
+        ref={container}
+        className="chart-container"
+        role="img"
+        aria-label={`${comparisonMetrics[metric]} comparison chart`}
+      />
+      <details className="accessible-data">
+        <summary>View latest comparison values as a table</summary>
+        <table>
+          <thead>
+            <tr>
+              <th>Asset</th>
+              <th>Date</th>
+              <th>{comparisonMetrics[metric]}</th>
+            </tr>
+          </thead>
+          <tbody>
+            {latest.map(({ asset, point }) => {
+              const value = point[metric];
+              return (
+                <tr key={asset.id}>
+                  <td>{asset.name}</td>
+                  <td>{new Date(point.timestamp).toLocaleDateString()}</td>
+                  <td>
+                    {value === null
+                      ? "—"
+                      : metric === "normalizedReturn"
+                        ? formatPercent(value)
+                        : formatCurrency(value, currency, metric !== "price")}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </details>
+    </>
   );
 }
 
