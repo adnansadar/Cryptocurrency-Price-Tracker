@@ -178,3 +178,5 @@ export function createApp(options: CreateAppOptions = {}) {
   app.use(errorHandler);
   return app;
 }
+
+export default createApp();
