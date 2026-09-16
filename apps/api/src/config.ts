@@ -1,10 +1,19 @@
+export function resolveDatabaseUrl(environment: NodeJS.ProcessEnv) {
+  return (
+    environment.DATABASE_URL ||
+    environment.POSTGRES_PRISMA_URL ||
+    environment.POSTGRES_URL ||
+    ""
+  );
+}
+
 export const config = {
   port: Number(process.env.API_PORT ?? 4000),
   webOrigin: process.env.WEB_ORIGIN ?? "http://localhost:3000",
   coinGeckoUrl:
     process.env.COINGECKO_API_URL ?? "https://api.coingecko.com/api/v3",
   coinGeckoApiKey: process.env.COINGECKO_API_KEY ?? "",
-  databaseUrl: process.env.DATABASE_URL ?? "",
+  databaseUrl: resolveDatabaseUrl(process.env),
   redisUrl: process.env.REDIS_URL ?? "",
   authUrl: process.env.BETTER_AUTH_URL ?? "http://localhost:4000",
   authSecret:
