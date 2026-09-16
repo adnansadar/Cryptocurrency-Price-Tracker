@@ -1,6 +1,9 @@
 import crypto from "node:crypto";
 import cors from "cors";
-import express, { type ErrorRequestHandler } from "express";
+import express, {
+  type ErrorRequestHandler,
+  type RequestHandler,
+} from "express";
 import { rateLimit } from "express-rate-limit";
 import * as helmetModule from "helmet";
 import { pinoHttp, type Options as PinoHttpOptions } from "pino-http";
@@ -24,11 +27,32 @@ type CreateAppOptions = {
   logStream?: PinoHttpOptions["stream"];
 };
 
+type HelmetFactory = (options?: {
+  crossOriginResourcePolicy?: { policy: "cross-origin" };
+}) => RequestHandler;
+
+function resolveHelmet(moduleValue: unknown): HelmetFactory {
+  let candidate = moduleValue;
+  while (
+    candidate !== null &&
+    typeof candidate === "object" &&
+    "default" in candidate
+  )
+    candidate = candidate.default;
+
+  if (typeof candidate !== "function")
+    throw new TypeError("Helmet middleware export is not callable");
+
+  return candidate as HelmetFactory;
+}
+
+const helmet = resolveHelmet(helmetModule);
+
 export function createApp(options: CreateAppOptions = {}) {
   const app = express();
   app.disable("x-powered-by");
   app.use(
-    helmetModule.default({
+    helmet({
       crossOriginResourcePolicy: { policy: "cross-origin" },
     }),
   );
