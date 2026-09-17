@@ -86,8 +86,12 @@ Create a Google OAuth web application and provide `GOOGLE_CLIENT_ID`, `GOOGLE_CL
 For local Google OAuth, use this authorized redirect URI:
 
 ```text
-http://localhost:4000/api/auth/callback/google
+http://localhost:3000/api/auth/callback/google
 ```
+
+Authentication and browser API requests use the web application's same-origin
+proxy. In production, set `BETTER_AUTH_URL` to the public web URL and register
+`<web-url>/api/auth/callback/google` as the Google authorized redirect URI.
 
 Guests can browse markets, comparisons, and asset research. Watchlists, saved screens, and private notes are locked until sign-in and are never stored in browser local storage. The selected color theme remains local to the browser.
 

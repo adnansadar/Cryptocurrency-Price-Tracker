@@ -20,8 +20,18 @@ import {
 } from "@crypto-terminal/contracts";
 import { z } from "zod";
 
-export const API_URL =
-  process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
+export function resolveApiBaseUrl(
+  configuredApiUrl: string | undefined,
+  isBrowser: boolean,
+) {
+  if (isBrowser) return "";
+  return configuredApiUrl ?? "http://localhost:4000";
+}
+
+export const API_URL = resolveApiBaseUrl(
+  process.env.NEXT_PUBLIC_API_URL,
+  typeof window !== "undefined",
+);
 
 export class ApiClientError extends Error {
   constructor(
